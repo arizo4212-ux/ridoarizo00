@@ -116,11 +116,13 @@ export default function App() {
               <button
                 id="login-page-db-btn"
                 onClick={() => setIsDbModalOpen(true)}
-                className="flex items-center space-x-2 px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-cyan-300 transition-all cursor-pointer shadow"
-                title="Buka Pengaturan Koneksi Database (Supabase / Neon DB / Firebase / Local)"
+                className="flex items-center space-x-2 px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-950/60 hover:bg-emerald-900/70 border border-emerald-500/50 text-emerald-300 transition-all cursor-pointer shadow"
+                title="Buka Pengaturan Koneksi Database Cloud Firestore"
               >
-                <Database className="w-3.5 h-3.5 text-cyan-400" />
-                <span className="text-[11px] font-mono uppercase">DB: {dbConfig.provider}</span>
+                <Database className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="text-[11px] font-mono uppercase font-bold">
+                  DB: {dbConfig.provider === 'firebase' ? 'FIRESTORE ONLINE' : dbConfig.provider}
+                </span>
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>

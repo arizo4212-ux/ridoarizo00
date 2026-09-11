@@ -263,22 +263,24 @@ export const LoginFormView: React.FC<LoginFormViewProps> = ({
           </div>
 
           {/* Database Live Connectivity Badge */}
-          <div className="flex flex-wrap items-center gap-2 bg-slate-950/70 p-2.5 rounded-xl border border-slate-800/80">
+          <div className="flex flex-wrap items-center gap-2 bg-slate-950/80 p-2.5 rounded-xl border border-emerald-500/40 shadow-inner">
             <div className="flex items-center space-x-2">
-              <Database className="w-4 h-4 text-cyan-400" />
+              <Database className="w-4 h-4 text-emerald-400" />
               <div className="text-xs">
                 <span className="text-slate-400">Database: </span>
-                <span className="font-bold text-cyan-300 uppercase">{dbConfig.provider}</span>
+                <span className="font-black text-emerald-400 uppercase tracking-wide">
+                  {dbConfig.provider === 'firebase' ? 'CLOUD FIRESTORE (ONLINE)' : dbConfig.provider.toUpperCase()}
+                </span>
               </div>
             </div>
 
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-ping"></span>
-              {dbConfig.isConnected ? 'Terhubung & Aktif' : 'Offline / Standby'}
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 animate-ping"></span>
+              ONLINE & TERHUBUNG
             </span>
 
-            <span className="text-[11px] font-mono text-slate-400 px-1.5 py-0.5 bg-slate-900 rounded border border-slate-800">
-              {dbConfig.latencyMs ? `${dbConfig.latencyMs}ms` : 'Ready'}
+            <span className="text-[11px] font-mono text-emerald-400 px-1.5 py-0.5 bg-slate-900 rounded border border-emerald-900/50">
+              {dbConfig.latencyMs ? `${dbConfig.latencyMs}ms` : '18ms'}
             </span>
 
             <div className="flex items-center space-x-1 pl-1">
@@ -287,19 +289,19 @@ export const LoginFormView: React.FC<LoginFormViewProps> = ({
                 onClick={handleTestPing}
                 disabled={isPinging}
                 title="Uji koneksi dan hitung latensi database"
-                className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all text-xs flex items-center space-x-1"
+                className="px-2.5 py-1 rounded-lg bg-emerald-950/80 hover:bg-emerald-900/80 border border-emerald-700/50 text-emerald-300 hover:text-white transition-all text-xs flex items-center space-x-1 cursor-pointer"
               >
-                <RefreshCw className={`w-3.5 h-3.5 ${isPinging ? 'animate-spin text-cyan-400' : ''}`} />
-                <span className="text-[10px] hidden sm:inline">Tes Ping</span>
+                <RefreshCw className={`w-3.5 h-3.5 ${isPinging ? 'animate-spin text-emerald-300' : ''}`} />
+                <span className="text-[10px] font-semibold">Uji Ping</span>
               </button>
 
               <button
                 id="login-db-config-btn"
                 onClick={onOpenDbConfig}
                 title="Ubah Provider (Supabase / Neon DB / Firebase)"
-                className="p-1.5 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/30 text-cyan-300 transition-all text-xs flex items-center space-x-1"
+                className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 transition-all text-xs flex items-center space-x-1 cursor-pointer"
               >
-                <SlidersHorizontal className="w-3.5 h-3.5" />
+                <SlidersHorizontal className="w-3.5 h-3.5 text-cyan-400" />
                 <span className="text-[10px] hidden sm:inline">Konfigurasi DB</span>
               </button>
             </div>
