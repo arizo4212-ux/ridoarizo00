@@ -32,11 +32,12 @@ export const DatabaseModal: React.FC<DatabaseModalProps> = ({ isOpen, onClose })
   const [neonConn, setNeonConn] = useState(currentConfig.neon?.connectionString || '');
   const [neonEndpoint, setNeonEndpoint] = useState(currentConfig.neon?.endpointUrl || '');
   
-  const [firebaseProject, setFirebaseProject] = useState(currentConfig.firebase?.projectId || '');
-  const [firebaseKey, setFirebaseKey] = useState(currentConfig.firebase?.apiKey || '');
+  const [firebaseProject, setFirebaseProject] = useState(currentConfig.firebase?.projectId || 'adept-hallway-pcvp7');
+  const [firebaseKey, setFirebaseKey] = useState(currentConfig.firebase?.apiKey || 'AIzaSyBzch2HlpiN9mBUagUIisBtUFRuscc0Jz8');
 
   // Testing & Status
   const [isTesting, setIsTesting] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
   const [testResult, setTestResult] = useState<{ success: boolean; message: string; latency?: number } | null>(null);
   const [copiedSql, setCopiedSql] = useState(false);
   const [showSqlTab, setShowSqlTab] = useState(false);
@@ -337,16 +338,36 @@ export const DatabaseModal: React.FC<DatabaseModalProps> = ({ isOpen, onClose })
 
           {/* Test Connection Button & Result */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <button
-              id="test-db-btn"
-              type="button"
-              onClick={handleTestConnection}
-              disabled={isTesting}
-              className="flex items-center justify-center space-x-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold border border-slate-600 transition-all cursor-pointer"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isTesting ? 'animate-spin' : ''}`} />
-              <span>{isTesting ? 'Menguji Koneksi...' : 'Uji Koneksi (Test Connection)'}</span>
-            </button>
+            <div className="flex items-center space-x-2">
+              <button
+                id="test-db-btn"
+                type="button"
+                onClick={handleTestConnection}
+                disabled={isTesting}
+                className="flex items-center justify-center space-x-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-semibold border border-slate-600 transition-all cursor-pointer"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isTesting ? 'animate-spin' : ''}`} />
+                <span>{isTesting ? 'Menguji Koneksi...' : 'Uji Koneksi (Test Ping)'}</span>
+              </button>
+
+              {selectedProvider === 'firebase' && (
+                <button
+                  id="sync-cloud-btn"
+                  type="button"
+                  onClick={async () => {
+                    setIsSyncing(true);
+                    const res = await dbService.syncAllToCloud();
+                    alert(res.message);
+                    setIsSyncing(false);
+                  }}
+                  disabled={isSyncing}
+                  className="flex items-center justify-center space-x-1.5 px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 rounded-xl text-xs font-semibold transition-all"
+                >
+                  <Flame className={`w-3.5 h-3.5 ${isSyncing ? 'animate-pulse' : ''}`} />
+                  <span>{isSyncing ? 'Sinkronisasi...' : 'Sinkronkan Data ke Firestore Cloud'}</span>
+                </button>
+              )}
+            </div>
 
             <button
               type="button"

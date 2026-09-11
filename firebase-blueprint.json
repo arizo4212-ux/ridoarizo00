@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Pengguna sistem pelabuhan dengan role tertentu",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "username": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "email": { "type": "string" },
+        "department": { "type": "string" },
+        "avatarUrl": { "type": "string" }
+      },
+      "required": ["id", "username", "name", "role"]
+    },
+    "Kapal": {
+      "title": "Kapal",
+      "description": "Armada kapal penyeberangan KMP",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nama": { "type": "string" },
+        "callSign": { "type": "string" },
+        "grt": { "type": "number" },
+        "kapasitasPax": { "type": "number" },
+        "kapasitasKendaraan": { "type": "number" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "nama"]
+    },
+    "Tiket": {
+      "title": "Tiket",
+      "description": "Tiket penumpang dan kendaraan pelabuhan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nomorTiket": { "type": "string" },
+        "namaPenumpang": { "type": "string" },
+        "jadwalId": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "nomorTiket"]
+    },
+    "Manifest": {
+      "title": "Manifest",
+      "description": "Data muatan barang dan kendaraan penyeberangan",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nomorManifest": { "type": "string" },
+        "jadwalId": { "type": "string" },
+        "beratTon": { "type": "number" },
+        "status": { "type": "string" }
+      },
+      "required": ["id", "nomorManifest"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Koleksi akun pengguna pelabuhan"
+    },
+    "/kapal/{kapalId}": {
+      "schema": "Kapal",
+      "description": "Koleksi data kapal pelabuhan"
+    },
+    "/tiket/{tiketId}": {
+      "schema": "Tiket",
+      "description": "Koleksi transaksi tiket penumpang"
+    },
+    "/manifest/{manifestId}": {
+      "schema": "Manifest",
+      "description": "Koleksi transaksi muatan dan kargo manifest"
+    }
+  }
+}
