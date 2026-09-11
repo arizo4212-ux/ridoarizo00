@@ -1,0 +1,6 @@
+{
+  "name": "SIMPEL-KAPAL - Sistem Muatan & Penumpang Kapal",
+  "description": "Aplikasi manajemen operasional muatan kapal dan manifest penumpang terintegrasi dengan database real-time, master data, transaksi tiket & kargo, laporan SPB, dan analitik performa pelabuhan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
